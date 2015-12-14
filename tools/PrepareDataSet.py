@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 import csv
 import numpy as np
-from os import listdir
-from os.path import isfile, join
+from os import listdir, mkdir
+from os.path import isfile, join, exists
 import matplotlib.pyplot as Plt
+import matplotlib.patches as mpatches
+
 
 EXTENSION = ".csv"
 
 TRAINING_SLICE = 70
-
 FILE_NAME = "a1_va3"
 FILE_NAME_REDUCED = FILE_NAME+"_reduced"
 FILE_NAME_REDUCED_PRED = FILE_NAME+"_reduced_pred"
 FILE_NAME_WINDOWED = FILE_NAME+"_windowed"
 
-FILE = "/home/gleydson/Documents/Mestrado-SistemasDeInformaçãoUSP2015.2/GesturePhasesDataset/"+FILE_NAME+EXTENSION
-FILE_REDUCED = "/home/gleydson/Documents/Mestrado-SistemasDeInformaçãoUSP2015.2/GesturePhasesDataset/workData/"+FILE_NAME_REDUCED+EXTENSION
-FILE_REDUCED_PRED = "/home/gleydson/Documents/Mestrado-SistemasDeInformaçãoUSP2015.2/GesturePhasesDataset/workData/"+FILE_NAME_REDUCED_PRED+EXTENSION
-PATH = "/home/gleydson/Documents/Mestrado-SistemasDeInformaçãoUSP2015.2/GesturePhasesDataset/workData"
+FILE = "../Files/GesturePhasesDataset/"+FILE_NAME+EXTENSION
+FILE_REDUCED = "../Files/GesturePhasesDataset/workData/"+FILE_NAME_REDUCED+EXTENSION
+FILE_REDUCED_PRED = "../Files/GesturePhasesDataset/workData/"+FILE_NAME_REDUCED_PRED+EXTENSION
+PATH = "Files/GesturePhasesDataset/workData"
 
 TARGET_NAMES = ['D', 'P', 'S', 'H', 'R']
 
@@ -60,8 +61,8 @@ def get_dataset(file):
         x.append(np.asarray(line[:-1]))
         y.append(line[-1:])
 
-    x = np.matrix(x).astype(np.float)
-    # x = x.astype(np.float)
+    x = np.matrix(x)
+    x = x.astype(np.float)
 
     dataset['x'] = x
     dataset['y'] = np.squeeze(np.asarray(y))
@@ -95,7 +96,7 @@ def get_real_classes(file):
     return true_classes
 
 
-def plot_confusion_matrix(cm):
+def plot_confusion_matrix(cm, file, k):
     title = 'Confusion Matrix'
     Plt.imshow(cm, interpolation='nearest', cmap=Plt.cm.Blues)
 
@@ -116,4 +117,22 @@ def plot_confusion_matrix(cm):
     Plt.tight_layout()
     Plt.ylabel('True label')
     Plt.xlabel('Predicted label')
-    Plt.show()
+    image_path = (PATH + '/K' + str(k) + '/')
+    if not exists(image_path):
+        mkdir(image_path)
+    Plt.savefig(image_path + file[0:10] + file[15:18] + '_fig.jpg')
+    # Plt.show()
+    Plt.clf()
+    Plt.close()
+    # pass
+
+
+def convert_target_name(target):
+    switcher = {
+        "D": "00001",
+        "P": "00010",
+        "S": "00100",
+        "H": "01000",
+        "R": "10000"
+    }
+    return switcher.get(target)

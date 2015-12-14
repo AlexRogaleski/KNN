@@ -1,4 +1,3 @@
-__author__ = 'gleydson'
 import operator as op
 from collections import Counter
 import numpy as np

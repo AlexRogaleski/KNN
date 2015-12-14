@@ -1,7 +1,7 @@
-__author__ = 'gleydson'
 import numpy as np
 import matplotlib.pyplot as plt
-from tools import PrepareDataSet as pds
+# from tools import PrepareDataSet as pds
+import PrepareDataSet as pds
 
 
 # random seed for consistency
@@ -63,7 +63,7 @@ def execute(original_matrix):
     print ("origianis", eigen_vectors_choose)
 
     print ("shape eigenvector", eigen_vectors_choose.shape)
-    eigen_vectors_choose = eigen_vectors_choose[0:15]
+    eigen_vectors_choose = eigen_vectors_choose[0:10]  # 0:15
 
     print ('escolhidos', eigen_vectors_choose)
 
@@ -125,8 +125,7 @@ def plot_explained_variance(eigen_values):
     plt.show()
 
 
-# dataset = pds.get_dataset(pds.FILE)
-dataset = pds.get_dataset("")
+dataset = pds.get_dataset(pds.FILE)
 reduced_matrix = execute(dataset)
 
 print ("final", reduced_matrix)

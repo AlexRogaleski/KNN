@@ -1,10 +1,10 @@
-__author__ = 'gleydson'
-from tools import PrepareDataSet as Pds
+# from tools import PrepareDataSet as Pds
+import PrepareDataSet as Pds
 from collections import Counter
 
 
 def generate_file_name(size_window, name):
-    return Pds.PATH+"/"+name+"_"+str(size_window)+Pds.EXTENSION
+    return "../"+Pds.PATH+"/"+name+"_"+str(size_window)+Pds.EXTENSION
 
 
 def to_window(size_window):
@@ -36,6 +36,6 @@ def to_window(size_window):
 
     w_file.close()
 
-to_window(10)
+to_window(15)
 
 

@@ -1,4 +1,3 @@
-__author__ = 'gleydson'
 import math as mt
 
 
